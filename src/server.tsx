@@ -1,5 +1,5 @@
 const appConfig = require('../config/main');
-require('babel-core/register');
+require('regenerator-runtime/runtime');
 
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();

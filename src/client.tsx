@@ -1,4 +1,4 @@
-require('babel-core/register');
+require('regenerator-runtime/runtime');
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
@@ -21,7 +21,7 @@ const store = new Store(
 
 const s = store.store();
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={s} key="provider">
     <ConnectedRouter
       history={store.history()}
