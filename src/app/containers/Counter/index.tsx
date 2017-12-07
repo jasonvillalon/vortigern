@@ -1,39 +1,47 @@
-import { ICounter, ICounterAction } from 'models/counter';
+import { StyleRules, withStyles } from 'material-ui/styles';
+import { Counter as ICounter, CounterAction } from 'models/counter';
 import * as React from 'react';
+import { compose } from 'recompose';
 import { decrement, increment } from 'redux/modules/counter/';
-const { connect } = require('react-redux');
-const style = require('./style.css');
 
-interface IProps {
+const { connect } = require('react-redux');
+
+const styles = (): StyleRules => ({
+  root: {
+  },
+});
+
+interface CounterProps {
+  classes: any;
   counter: ICounter;
-  increment: Redux.ActionCreator<ICounterAction>;
-  decrement: Redux.ActionCreator<ICounterAction>;
+  inc: Redux.ActionCreator<CounterAction>;
+  dec: Redux.ActionCreator<CounterAction>;
 }
 
 @connect(
   (state) => ({ counter: state.counter }),
   (dispatch) => ({
-    decrement: () => dispatch(decrement()),
-    increment: () => dispatch(increment()),
+    dec: () => dispatch(decrement()),
+    inc: () => dispatch(increment()),
   }),
 )
 
-class Counter extends React.Component<IProps, {}> {
+class CounterComponent extends React.Component<CounterProps, {}> {
   public render() {
-    const { increment, decrement, counter } = this.props;
+    const { inc, dec, counter, classes } = this.props;
 
     return (
-      <div className={style.Counter}>
+      <div className={classes.Counter}>
         <h4>Counter Example</h4>
         <button
           name="incBtn"
-          onClick={increment}
+          onClick={inc}
         >
           INCREMENT
         </button>
         <button
           name="decBtn"
-          onClick={decrement}
+          onClick={dec}
           disabled={counter.count <= 0}
         >
           DECREMENT
@@ -43,5 +51,9 @@ class Counter extends React.Component<IProps, {}> {
     );
   }
 }
+
+const Counter = compose(
+  withStyles(styles),
+)<{}>(CounterComponent);
 
 export { Counter };

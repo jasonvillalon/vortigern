@@ -1,31 +1,25 @@
-import { IStars } from 'models/stars';
+import { Stars } from 'models/stars';
 import * as React from 'react';
 
-import { IStore } from 'redux/IStore';
+import { Store } from 'redux/IStore';
 
-// import { asyncConnect } from 'redux-connect';
+import { StyleRules, withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
 import { getStars } from 'redux/modules/stars';
 
-const style = require('./style.css');
+const styles = (): StyleRules => ({
+  root: {
+  },
+});
 
-interface IProps {
-  stars: IStars;
+interface StarsProps {
+  stars: Stars;
   getStars: any;
+  classes: any;
 }
 
-// @asyncConnect([{
-//   promise: ({ store: { dispatch } }) => {
-//     return dispatch(getStars());
-//   },
-// }])
-// @connect(
-//   (state: IStore) => ({ stars: state.stars }),
-//   (dispatch) => ({
-//     getStars: () => dispatch(getStars()),
-//   }),
-// )
-class StarsComponent extends React.Component<IProps, {}> {
+class StarsComponent extends React.Component<StarsProps, {}> {
   public state = {
     isReady: false,
   };
@@ -37,20 +31,22 @@ class StarsComponent extends React.Component<IProps, {}> {
     this.setState({isReady: true});
   }
   public render() {
-    const { stars } = this.props;
+    const { classes, stars } = this.props;
     return (
-      <div className={style.Stars}>
+      <div className={classes.Stars}>
         {stars.isFetching ? 'Fetching Stars' : stars.count}
       </div>
     );
   }
 }
 
-const Stars = connect(
-  (state: IStore) => ({ stars: state.stars }),
+const Stars = compose(
+  withStyles(styles),
+)<{}>(connect(
+  (state: Store) => ({ stars: state.stars }),
   (dispatch) => ({
     getStars: () => dispatch(getStars()),
   }),
-)(StarsComponent);
+)(StarsComponent));
 
 export { Stars };

@@ -1,11 +1,11 @@
-export interface IStars {
+export interface Stars {
   isFetching?: boolean;
   count?: number;
   error?: boolean;
   message?: any;
 }
 
-export interface IStarsAction {
+export interface StarsAction {
   type: string;
   payload?: {
     count?: number;

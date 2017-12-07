@@ -16,10 +16,10 @@ import { StaticRouter } from 'react-router';
 // import { configureStore } from './app/redux/store';
 // import routes from './app/routes';
 
-import {App} from 'containers';
+import { App } from 'containers';
 
 import log from 'log';
-import { IStore } from 'redux/IStore';
+import { Store as IStore } from 'redux/IStore';
 import { Html } from './app/containers';
 import Store from './app/redux/store';
 
@@ -85,27 +85,6 @@ app.get('*', (req, res) => {
   } else {
     res.status(200).send(renderHTML(html, store.store()));
   }
-  // match({ history, routes, location },
-  //   (error, redirectLocation, renderProps) => {
-  //     if (error) {
-  //       res.status(500).send(error.message);
-  //     } else if (redirectLocation) {
-  //       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-  //     } else if (renderProps) {
-  //       const asyncRenderData = Object.assign({}, renderProps, { store });
-
-  //       loadOnServer(asyncRenderData).then(() => {
-  //         const markup = ReactDOMServer.renderToString(
-  //           <Provider store={store} key="provider">
-  //             <ReduxAsyncConnect {...renderProps} />
-  //           </Provider>,
-  //         );
-  //         res.status(200).send(renderHTML(markup, store));
-  //       });
-  //     } else {
-  //       res.status(404).send('Not Found?');
-  //     }
-  //   });
 });
 
 app.listen(appConfig.port, appConfig.host, (err) => {

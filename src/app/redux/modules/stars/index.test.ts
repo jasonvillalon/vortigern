@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { fetchMock, mockStore } from 'helpers/TestHelper.tsx';
-import { IStarsAction } from 'models/stars';
+import { StarsAction } from 'models/stars';
 import * as stars from './';
 
 /** Mock Data */
@@ -32,7 +32,7 @@ describe('Stars Module', () => {
           body: githubResponse,
         });
 
-        const expectedActions: IStarsAction[] = [
+        const expectedActions: StarsAction[] = [
           { type: stars.GET_REQUEST },
           { type: stars.GET_SUCCESS, payload: { count: githubResponse.stargazers_count } },
         ];
@@ -53,7 +53,7 @@ describe('Stars Module', () => {
           body: errResponse,
         });
 
-        const expectedActions: IStarsAction[] = [
+        const expectedActions: StarsAction[] = [
           { type: stars.GET_REQUEST },
           { type: stars.GET_FAILURE, payload: { message: errResponse } },
         ];

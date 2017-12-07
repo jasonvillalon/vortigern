@@ -1,4 +1,4 @@
-import { IStars, IStarsAction } from 'models/stars';
+import { Stars, StarsAction } from 'models/stars';
 
 /** Action Types */
 export const GET_REQUEST: string = 'stars/GET_REQUEST';
@@ -6,12 +6,12 @@ export const GET_SUCCESS: string = 'stars/GET_SUCCESS';
 export const GET_FAILURE: string = 'stars/GET_FAILURE';
 
 /** Initial State */
-const initialState: IStars = {
+const initialState: Stars = {
   isFetching: false,
 };
 
 /** Reducer */
-export function starsReducer(state = initialState, action: IStarsAction) {
+export function starsReducer(state: Stars = initialState, action: StarsAction) {
   switch (action.type) {
     case GET_REQUEST:
       return {...state,
@@ -20,12 +20,12 @@ export function starsReducer(state = initialState, action: IStarsAction) {
     case GET_SUCCESS:
       return {...state,
         isFetching: false,
-        count: action.payload.count};
+        count: action.payload && action.payload.count};
 
     case GET_FAILURE:
       return {...state,
         isFetching: false,
-        message: action.payload.message,
+        message: action.payload && action.payload.message,
         error: true};
 
     default:
@@ -41,10 +41,10 @@ export function getStars() {
     .then((res) => {
       if (res.ok) {
         return res.json()
-          .then((res) => dispatch(starsSuccess(res.stargazers_count)));
+          .then((result: any) => dispatch(starsSuccess(result.stargazers_count)));
       } else {
         return res.json()
-          .then((res) => dispatch(starsFailure(res)));
+          .then((result: any) => dispatch(starsFailure(result)));
       }
     })
     .catch((err) => dispatch(starsFailure(err)));
@@ -52,14 +52,14 @@ export function getStars() {
 }
 
 /** Action Creator */
-export function starsRequest(): IStarsAction {
+export function starsRequest(): StarsAction {
   return {
     type: GET_REQUEST,
   };
 }
 
 /** Action Creator */
-export function starsSuccess(count: number): IStarsAction {
+export function starsSuccess(count: number): StarsAction {
   return {
     type: GET_SUCCESS,
     payload: {
@@ -69,7 +69,7 @@ export function starsSuccess(count: number): IStarsAction {
 }
 
 /** Action Creator */
-export function starsFailure(message: any): IStarsAction {
+export function starsFailure(message: any): StarsAction {
   return {
     type: GET_FAILURE,
     payload: {

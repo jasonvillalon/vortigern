@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { IStore } from 'redux/IStore';
-import * as serialize from 'serialize-javascript';
+import { Store } from 'redux/IStore';
 
-interface IHtmlProps {
+const serialize = require('serialize-javascript');
+
+interface HtmlProps {
   manifest?: any;
-  markup?: string;
-  store?: Redux.Store<IStore>;
+  markup: string;
+  store: Redux.Store<Store>;
 }
 
-class Html extends React.Component<IHtmlProps, {}> {
-  private resolve(files) {
+class Html extends React.Component<HtmlProps, {}> {
+  private resolve(files: any) {
     return files.map((src) => {
       if (!this.props.manifest[src]) { return; }
       return '/public/' + this.props.manifest[src];

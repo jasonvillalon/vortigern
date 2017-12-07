@@ -2,9 +2,9 @@ const appConfig = require('../../../config/main');
 // import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
-import {createLogger} from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import { IStore } from './IStore';
+import { Store } from 'redux/IStore';
 import rootReducer from './reducers';
 
 export default class ConfigureStore {
@@ -12,7 +12,7 @@ export default class ConfigureStore {
   public routerMiddlewareH?: any = null;
   public initialState?: any = null;
   public Store: Redux.Store<any>;
-  constructor(History: any, initialState?: IStore) {
+  constructor(History: any, initialState?: Store) {
     this.History = History;
     this.routerMiddlewareH = routerMiddleware(this.History);
     this.initialState = initialState;
@@ -45,7 +45,7 @@ export default class ConfigureStore {
     }
   }
 
-  public store(): Redux.Store<IStore> {
+  public store(): Redux.Store<Store> {
     return this.Store;
   }
 

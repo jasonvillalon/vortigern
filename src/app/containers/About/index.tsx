@@ -1,14 +1,25 @@
+import { StyleRules, withStyles } from 'material-ui/styles';
 import * as React from 'react';
-const style = require('./style.css');
+import { compose } from 'recompose';
 
-class About extends React.Component<any, any> {
+const styles = (): StyleRules => ({
+  root: {
+  },
+});
+
+class AboutComponent extends React.Component<any, any> {
   public render() {
+    const { classes } = this.props;
     return (
-      <div className={style.About}>
+      <div className={classes.root}>
         <h4>About</h4>
       </div>
     );
   }
 }
+
+const About = compose(
+  withStyles(styles),
+)<{}>(AboutComponent);
 
 export { About };

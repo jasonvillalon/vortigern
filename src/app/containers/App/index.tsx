@@ -1,9 +1,10 @@
 const appConfig = require('../../../../config/main');
 import { Header } from 'components';
+import withRoot from 'components/withRoot';
 import { About, Counter, Home, Stars } from 'containers';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import {Route} from 'react-router';
+import { Route } from 'react-router';
 
 const style = require('./style.css');
 
@@ -23,4 +24,4 @@ class App extends React.Component<any, any> {
   }
 }
 
-export { App };
+export default withRoot(App);

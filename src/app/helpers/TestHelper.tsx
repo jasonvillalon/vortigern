@@ -18,8 +18,8 @@ const middlewares: Redux.Middleware[] = [thunk];
 const mockStore = configureStore(middlewares);
 
 /** Render Component */
-function renderComponent(ComponentClass, state?, props?) {
-  const store = createStore(rootReducer, state, compose(
+function renderComponent(ComponentClass: any, state?: any, props?: any) {
+  const store = createStore(rootReducer, state || {}, compose(
     applyMiddleware(...middlewares),
   ));
 
