@@ -1,7 +1,10 @@
 require('regenerator-runtime/runtime');
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
+import 'core-js/es6/map';
+import 'core-js/es6/set';
 import 'isomorphic-fetch';
+import 'raf/polyfill';
 
 import { App } from 'containers';
 import createHistory from 'history/createBrowserHistory';

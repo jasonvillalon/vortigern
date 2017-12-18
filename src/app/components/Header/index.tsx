@@ -1,20 +1,36 @@
 import AccountCircle from 'material-ui-icons/AccountCircle';
 import MenuIcon from 'material-ui-icons/Menu';
 import AppBar from 'material-ui/AppBar';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { StyleRules, Theme, withStyles } from 'material-ui/styles';
-import Switch from 'material-ui/Switch';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import * as React from 'react';
 import { compose } from 'recompose';
 
+const drawerWidth = 240;
+
 const styles = (theme: Theme): StyleRules => ({
   root: {
     marginBottom: theme.spacing.unit * 3,
     width: '100%',
+  },
+  appBar: {
+    position: 'absolute',
+    zIndex: theme.zIndex.navDrawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   flex: {
     flex: 1,
@@ -33,6 +49,7 @@ interface HeaderState {
 
 interface HeaderProps {
   classes: any;
+  onMenuClick: () => void;
 }
 
 class Header extends React.Component<HeaderProps, HeaderState> {
@@ -53,26 +70,23 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.setState({ anchorEl: undefined });
   }
 
+  onMenuClick = () => {
+    if (this.props.onMenuClick) {
+      this.props.onMenuClick();
+    }
+  }
   render(): JSX.Element {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
     return (
-      <div className={classes.root}>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch checked={auth} onChange={this.handleChange} aria-label="LoginSwitch" />}
-            label={auth ? 'Logout' : 'Login'}
-          />
-        </FormGroup>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+            <IconButton onClick={this.onMenuClick} className={classes.menuButton} color="contrast" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              Title
+              Barbar
             </Typography>
             {auth && (
               <div>
@@ -96,7 +110,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
                     horizontal: 'right',
                   }}
                   open={open}
-                  onRequestClose={this.handleRequestClose}
+                  onClose={this.handleRequestClose}
                 >
                   <MenuItem onClick={this.handleRequestClose}>Profile</MenuItem>
                   <MenuItem onClick={this.handleRequestClose}>My account</MenuItem>
@@ -105,7 +119,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             )}
           </Toolbar>
         </AppBar>
-      </div>
     );
   }
 }

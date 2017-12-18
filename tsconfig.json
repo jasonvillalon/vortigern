@@ -20,7 +20,6 @@
         "noUnusedLocals": true,
         "jsx": "react",
         "moduleResolution": "node",
-        // "rootDir": "src",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
@@ -39,5 +38,4 @@
         "useCache": true,
         "useBabel": true
     }
-
 }
